@@ -35,6 +35,7 @@ public class MainActivity extends AppCompatActivity {
 
 
 
+
             }
         });
     }
@@ -43,6 +44,7 @@ public class MainActivity extends AppCompatActivity {
         String upass = userpass.getText ().toString ();
         if(uid.equals ("lsh") && upass.equals ("12345")){
             Toast.makeText (this, " "  + uid, Toast.LENGTH_SHORT).show ();
+
 
 
         } else {

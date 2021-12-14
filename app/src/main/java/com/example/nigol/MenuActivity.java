@@ -1,10 +1,12 @@
 package com.example.nigol;
 
+import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -27,6 +29,7 @@ import java.util.Map;
 public class MenuActivity extends AppCompatActivity {
     EditText editText;
     TextView textView;
+    DatePickerDialog.OnDateSetListener callbackMethon;
 
     static RequestQueue requestQueue;
 
@@ -38,6 +41,8 @@ public class MenuActivity extends AppCompatActivity {
         super.onCreate (saveInstanceState);
         setContentView (R.layout.menulayout);
 
+        this.InitalLizeListener();
+
         editText = findViewById (R.id.editText);
         textView = findViewById (R.id.textView);
 
@@ -46,6 +51,17 @@ public class MenuActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 makeRequest();
+
+            }
+        });
+
+        Button dateButton = findViewById (R.id.dateButton);
+        dateButton.setOnClickListener (new View.OnClickListener () {
+            @Override
+            public void onClick(View v) {
+
+                dateProcess (v);
+
 
             }
         });
@@ -60,6 +76,30 @@ public class MenuActivity extends AppCompatActivity {
 
         adapter = new MovieAdapter ();
         recyclerView.setAdapter (adapter);
+
+    }
+    public void InitalLizeListener()
+    {
+        callbackMethon = new DatePickerDialog.OnDateSetListener () {
+            @Override
+            public void onDateSet(DatePicker datePicker, int year, int month, int dayofMonth) {
+                String year1 = String.valueOf (year);
+                String month1 = String.valueOf (month);
+                String dayOfMonth1 = String.valueOf (dayofMonth);
+                String date = year1 + month1 + dayOfMonth1;
+                editText.setText ("http://www.kobis.or.kr/kobisopenapi/webservice/rest/boxoffice/searchDailyBoxOfficeList.json?key=b151453efefc24a3ed2fb130d19c4299&targetDt=" + date);
+
+
+
+
+
+            }
+        };
+    }
+    public void dateProcess(View v)
+    {
+        DatePickerDialog dialog = new DatePickerDialog (this, callbackMethon, 2021, 11, 10);
+        dialog.show ();
 
     }
     public void makeRequest(){
